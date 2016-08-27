@@ -1,3 +1,5 @@
+API Endpoints and Requests
+
 <b>http://localhost/SorryAppBackend/users.php</b>  
 GET (no params) -> gets all users  
 GET (email) -> gets a particular user  
