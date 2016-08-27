@@ -1,4 +1,4 @@
-API Endpoints and Requests
+API ENDPOINTS AND REQUESTS
 
 <b>http://localhost/SorryAppBackend/users.php</b>  
 GET (no params) -> gets all users  
