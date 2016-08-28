@@ -1,11 +1,11 @@
 <?php
-	include('dbconnect.php');
+	//include('dbconnect.php');
 	include('functions.php');
 
 	if($_SERVER['REQUEST_METHOD'] == 'GET'){
 		if(!empty($_GET['email'])){	
 			$user = get_user($_GET['email']);
-			if(empty($rows)){
+			if(empty($user)){
 				deliver_response(200, "user not found", NULL);
 			}
 			else{
@@ -13,7 +13,7 @@
 			}
 		}
 		else{
-	   		$users = getUsers();
+	   		$users = get_users();
 	   		if(empty($users)){
 				deliver_response(200, "no users are in the database", NULL);
 			}

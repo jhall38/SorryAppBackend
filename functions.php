@@ -1,4 +1,5 @@
 <?php
+	include('dbconnect.php');
 	header("Content-Type:application/json");
 
 	function deliver_response($status, $status_message, $data){
@@ -13,8 +14,8 @@
 	}
 
 	function get_users(){
+		global $db;
 		$query = "SELECT * FROM tblPerson";
-		mysqli_query($db, $query) or die('Error querying database.');
 		$result = mysqli_query($db, $query);
 		while($r = mysqli_fetch_assoc($result)) {
 	   		 $rows['user'][] = $r;
@@ -23,6 +24,7 @@
 	}
 
 	function get_user($email){
+		global $db;
 		$query = "SELECT * FROM tblPerson WHERE Email='$email'";
 		$result = mysqli_query($db, $query);
 		$rows = array();
