@@ -1,12 +1,12 @@
 <?php
-	//include('dbconnect.php');
+	include('dbconnect.php');
 	include('functions.php');
 
 	if($_SERVER['REQUEST_METHOD'] == 'GET'){
 		if(!empty($_GET['email'])){	
 			$user = get_user($_GET['email']);
 			if(empty($user)){
-				deliver_response(200, "user not found", NULL);
+				deliver_response(404, "user not found", NULL);
 			}
 			else{
 				deliver_response(200, "user found", $user);
@@ -15,7 +15,7 @@
 		else{
 	   		$users = get_users();
 	   		if(empty($users)){
-				deliver_response(200, "no users are in the database", NULL);
+				deliver_response(404, "no users are in the database", NULL);
 			}
 			else{
 				deliver_response(200, "list of all users", $users);
@@ -38,7 +38,7 @@
 	   			deliver_response(200, "user successfully added", NULL);
 			}
 			else{
-				deliver_response(200, "user already exists", NULL);
+				deliver_response(400, "user already exists", NULL);
 			}
 		}
 		else{
