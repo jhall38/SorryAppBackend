@@ -23,19 +23,19 @@
 		}
 	}
 	else if($_SERVER['REQUEST_METHOD'] == 'POST'){
-		if(!empty($_POST['email']) && !empty($_POST['first_name']) && !empty($_POST['last_name']) && !empty($_POST['gender']) && !empty($_POST['dob'])){
+		if(!empty($_POST['email']) && !empty($_POST['first_name']) && !empty($_POST['last_name']) && !empty($_POST['gender'])){
 			$email = $_POST['email'];
 			$first_name = $_POST['first_name'];
 			$last_name = $_POST['last_name'];
 			$gender = $_POST['gender'];
-			$dob = $_POST['dob'];
-			$query = "SELECT addNewPerson('$email','$first_name','$last_name', '$gender', '$dob')";
+			$query = "SELECT addNewPerson('$email','$first_name','$last_name','$gender')";
 			$result = mysqli_query($db, $query);
 			if($result){
 				while($r = mysqli_fetch_assoc($result)) {
 		   			$rows['result'][] = $r;
 		   		}
-		   		if($rows['result'][0]["addNewPerson('$email','$first_name','$last_name', '$gender', '$dob')"] == 1){
+				print_r($rows['result'][0]);
+		   		if($rows['result'][0]["addNewPerson('$email','$first_name','$last_name','$gender')"] == 1){
 		   			deliver_response(200, "user successfully added", NULL);
 				}
 				else{
@@ -43,7 +43,7 @@
 				}
 			}
 			else{
-				deliver_response(400, "invalid request", NULL);
+				deliver_response(400, "invalid request!!", NULL);
 			}
 		}
 		else{

@@ -33,13 +33,13 @@
 	   	return $rows;
 	}
 
-	function get_num_sorry_or_not_sorry($email, $sorrynotsorry){
+	function get_num_sorry_or_not_sorry($email, $sorrynotsorry, $timestamp){
 		global $db;
 		if($sorrynotsorry == 'sorry'){
-			$query = "SELECT countTodayRecordSorry('$email', now())";
+			$query = "SELECT countTodayRecordSorry('$email', '$timestamp')";
 		}
 		else if($sorrynotsorry == 'notsorry'){
-			$query = "SELECT countTodayRecordNotSorry('$email', now())";
+			$query = "SELECT countTodayRecordNotSorry('$email', '$timestamp')";
 		}
 		else{
 			deliver_response(400, "invalid request", NULL);
@@ -49,24 +49,24 @@
 		$rows = array();
 		if($sorrynotsorry == 'sorry'){
 	   		while($r = mysqli_fetch_assoc($result)) {
-		  		$rows['num_' . $sorrynotsorry][] = $r["countTodayRecordSorry('$email', now())"];
+		  		$rows['num_' . $sorrynotsorry][] = $r["countTodayRecordSorry('$email', '$timestamp')"];
 		   	}
 	   	}
 	   	else{
 	   		while($r = mysqli_fetch_assoc($result)) {
-		  		$rows['num_' . $sorrynotsorry][] = $r["countTodayRecordNotSorry('$email', now())"];
+		  		$rows['num_' . $sorrynotsorry][] = $r["countTodayRecordNotSorry('$email', '$timestamp')"];
 		   	}	   		
 	   	}
 	   	return $rows;
 	}
 
-	function get_num_sorry_or_not_sorry_over_week($email, $sorrynotsorry){
+	function get_num_sorry_or_not_sorry_over_week($email, $sorrynotsorry, $timestamp){
 		global $db;
 		if($sorrynotsorry == 'sorry'){
-			$query = "CALL countWeekSorry('$email')";
+			$query = "CALL countWeekSorry('$email','$timestamp')";
 		}
 		else if($sorrynotsorry == 'notsorry'){
-			$query = "CALL countWeekNotSorry('$email')";
+			$query = "CALL countWeekNotSorry('$email', '$timestamp')";
 		}
 		else{
 			deliver_response(400, "invalid request", NULL);
@@ -80,13 +80,13 @@
 	   	return $rows;
 	}
 
-	function get_num_sorry_or_not_sorry_over_month($email, $sorrynotsorry){
+	function get_num_sorry_or_not_sorry_over_month($email, $sorrynotsorry, $timestamp){
 		global $db;
 		if($sorrynotsorry == 'sorry'){
-			$query = "CALL countMonthSorry('$email')";
+			$query = "CALL countMonthSorry('$email', '$timestamp')";
 		}
 		else if($sorrynotsorry == 'notsorry'){
-			$query = "CALL countMonthNotSorry('$email')";
+			$query = "CALL countMonthNotSorry('$email', '$timestamp')";
 		}
 		else{
 			deliver_response(400, "invalid request", NULL);
@@ -100,13 +100,13 @@
 	   	return $rows;
 	}
 
-	function get_num_sorry_or_not_sorry_over_year($email, $sorrynotsorry){
+	function get_num_sorry_or_not_sorry_over_year($email, $sorrynotsorry, $timestamp){
 		global $db;
 		if($sorrynotsorry == 'sorry'){
-			$query = "CALL countYearSorry('$email')";
+			$query = "CALL countYearSorry('$email', '$timestamp)";
 		}
 		else if($sorrynotsorry == 'notsorry'){
-			$query = "CALL countYearNotSorry('$email')";
+			$query = "CALL countYearNotSorry('$email', '$timestamp')";
 		}
 		else{
 			deliver_response(400, "invalid request", NULL);
@@ -120,13 +120,13 @@
 	   	return $rows;
 	}
 
-	function said_sorry_or_not_sorry($email, $sorrynotsorry){
+	function said_sorry_or_not_sorry($email, $sorrynotsorry, $timestamp){
 		global $db;
 		if($sorrynotsorry == 'sorry'){
-			$query = "SELECT addNewRecordSorry('$email', now())";
+			$query = "SELECT addNewRecordSorry('$email', '$timestamp')";
 		}
 		else if($sorrynotsorry == 'notsorry'){
-			$query = "SELECT addNewRecordNotSorry('$email', now())";
+			$query = "SELECT addNewRecordNotSorry('$email', '$timestamp')";
 		}
 		else{
 			deliver_response(400, "invalid request", NULL);
@@ -136,12 +136,12 @@
 		$rows = array();
 		if($sorrynotsorry == 'sorry'){
 	   		while($r = mysqli_fetch_assoc($result)) {
-		  		$rows['num_' . $sorrynotsorry][] = $r["addNewRecordSorry('$email', now())"];
+		  		$rows['num_' . $sorrynotsorry][] = $r["addNewRecordSorry('$email', '$timestamp')"];
 		   	}
 		}
 		else{
 			while($r = mysqli_fetch_assoc($result)) {
-		  		$rows['num_' . $sorrynotsorry][] = $r["addNewRecordNotSorry('$email', now())"];
+		  		$rows['num_' . $sorrynotsorry][] = $r["addNewRecordNotSorry('$email', '$timestamp')"];
 		   	}
 		}
    		if($rows['num_' . $sorrynotsorry][0] == 1){
