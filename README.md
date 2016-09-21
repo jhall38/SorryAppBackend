@@ -11,6 +11,6 @@ GET (email, sorrynotsorry, type, timestamp) -> gets the number of sorries or not
 POST (email, sorrynotsorry, timestamp) -> adds a sorry or not sorry record to a user.  
 
 <b>http://sorryapp.canadacentral.cloudapp.azure.com/SorryAppBackend/leaderboard.php</b>  
-GET (sorrynotsorry, timestamp) -> gets the top 10 users who have said soryy or not sorry spanning all of time.  
+GET (sorrynotsorry) -> gets the top 10 users who have said soryy or not sorry spanning all of time.  
 
 timestamp must be in the format of YYYY-MM-DD HH:MM:SS
