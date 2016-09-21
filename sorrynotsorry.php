@@ -3,7 +3,7 @@
 	include('functions.php');
 
 	if($_SERVER['REQUEST_METHOD'] == 'GET'){
-		if(!empty($_GET['email']) && !empty($_GET['sorrynotsorry'])){
+		if(!empty($_GET['email']) && !empty($_GET['sorrynotsorry']) && !empty($_GET['timestamp'])){
 			if(empty($_GET['type'])){
 				if ($_GET['sorrynotsorry'] != "sorry" and $_GET['sorrynotsorry'] != "notsorry") {
 				   deliver_response(400, "invalid request", NULL);
@@ -44,7 +44,7 @@
 		}
 	}
 	else if($_SERVER['REQUEST_METHOD'] == 'POST'){
-		if(!empty($_POST['email']) && !empty($_POST['sorrynotsorry']) && 
+		if(!empty($_POST['email']) && !empty($_POST['sorrynotsorry']) && !empty($_POST['timestamp']) &&
 			($_POST['sorrynotsorry'] == "sorry" || $_POST['sorrynotsorry'] == "notsorry")){
 			if(!empty(get_user($_POST['email']))){
 				$success = said_sorry_or_not_sorry($_POST['email'], $_POST['sorrynotsorry'], $_POST['timestamp']);

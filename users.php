@@ -1,9 +1,8 @@
 <?php
 	include('dbconnect.php');
 	include('functions.php');
-
 	if($_SERVER['REQUEST_METHOD'] == 'GET'){
-		if(!empty($_GET['email'])){	
+		if(!empty($_GET['email'])){
 			$user = get_user($_GET['email']);
 			if(empty($user)){
 				deliver_response(404, "user not found", NULL);

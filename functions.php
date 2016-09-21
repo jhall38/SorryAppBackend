@@ -1,9 +1,9 @@
 <?php
 	header("Content-Type:application/json");
+	verify_access_token();
 
 	function deliver_response($status, $status_message, $data){
 		header("HTTP/1.1 $status $status_message");
-
 		$response['status'] = $status;
 		$response['status_message'] = $status_message;
 		$response['data'] = $data;
@@ -101,9 +101,9 @@
 	}
 
 	function get_num_sorry_or_not_sorry_over_year($email, $sorrynotsorry, $timestamp){
-		global $db;
-		if($sorrynotsorry == 'sorry'){
-			$query = "CALL countYearSorry('$email', '$timestamp)";
+		global $db;		
+		if($sorrynotsorry == 'sorry'){				  
+			$query = "CALL countYearSorry('$email', '$timestamp')";
 		}
 		else if($sorrynotsorry == 'notsorry'){
 			$query = "CALL countYearNotSorry('$email', '$timestamp')";
@@ -150,4 +150,44 @@
    		else{
    			return false;
    		}
+	}
+	
+	function verify_access_token(){
+		if(empty($_GET['access_token'])){
+			deliver_response(401, "invalid request - no access token provided", NULL);
+			die();
+		}
+		$json = curl_get_file_contents('https://graph.facebook.com/me?access_token=' . $_GET['access_token']);
+		if($json == 'false'){
+			deliver_response(401, "cannot connect to open graph", NULL);
+                	die();
+		}
+		$data = json_decode($json, true);
+		if(empty($data)){
+			deliver_response(401, "cannot connect to open graph", NULL);
+			die();
+		}
+		if(empty($data['error'])){
+			if(!empty($data['id'])){
+				return;
+			}
+			else{
+				deliver_response(401, "invalid query to open graph", NULL);
+			}
+		}
+		else{
+			deliver_response(403, "invalid token", NULL);
+			die();
+		}
+	}
+
+	function curl_get_file_contents($URL) {
+		$c = curl_init();
+		curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($c, CURLOPT_URL, $URL);
+		$contents = curl_exec($c);
+		$err  = curl_getinfo($c,CURLINFO_HTTP_CODE);
+		curl_close($c);
+		if ($contents) return $contents;
+		else return FALSE;
 	}
